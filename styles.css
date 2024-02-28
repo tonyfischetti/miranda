@@ -237,6 +237,16 @@ h6 { font-size: 1.2em !important; }
     .tony-dashboard .cm-sizer {
         --line-width: 95% !important;
     }
+
+    .tony-small-dashboard .tony-task-div {
+        margin-left:  10px;
+        margin-right: 10px;
+        font-size: .8em;
+    }
+
+    .tony-small-dashboard .tony-task-tags-holder {
+        font-size: 0.8em;
+    }
 }
 
 /*************************************************************************/
@@ -282,17 +292,65 @@ h6 { font-size: 1.2em !important; }
 }
 
 
-/* EXPERIMENTAL */
-.tony-small-dashboard {
-    font-size: .8em;
-}
-
-.tony-small-dashboard .tony-task-div {
-    margin-left:  10px;
-    margin-right: 10px;
-}
 
 /*************************************************************************/
 
 
+/*************************************************************************/
+/**
+  * For the Tasks modal
+  */
+/* #recurrence, */
+/* #recurrence + code, */
+/* label[for='recurrence'], */
+/* #scheduled, */
+/* #scheduled + code, */
+/* label[for='scheduled'], */
+/* #scheduled, */
+/* #scheduled + code, */
+/* label[for='scheduled'], */
+/* #start, */
+/* #start + code, */
+/* label[for='start'], */
+/* #created, */
+/* #created + code, */
+/* label[for='created'], */
+/* #done, */
+/* #done + code, */
+/* label[for='done'], */
+/* #cancelled, */
+/* #cancelled + code, */
+/* label[for='cancelled'], */
+/* #forwardOnly, */
+/* #forwardOnly + code, */
+/* label[for='forwardOnly'], */
+/* label.tasks-modal-warning, */
+/* /* label[for='status'], */ */
+/* /* input#status, */ */
+/* label[for='blockedBy'], */
+/* label[for='blockedBy'] + span, */
+/* label[for='blockedBy'] + span + div, */
+/* label[for='blocking'], */
+/* label[for='blocking'] + span, */
+/* label[for='blocking'] + span + div, */
+/* .tasks-modal-section.tasks-modal-dates:has(> input#created), */
+/* .tasks-modal-section:has(> select#status-type), */
+/* span:has(> input#priority-medium) { */
+/*     display: none; */
+/* } */
+
+.tasks-modal textarea {
+    height: 35px !important;
+}
+
+.tasks-modal-buttons {
+    padding-top: 0px !important;
+}
+
+
+/* .tasks-modal-section.tasks-modal-dates, */
+/* .tasks-modal-section.tasks-modal-status, */
+/* .tasks-modal-dates + .tasks-modal-section */
+
+/*************************************************************************/
 

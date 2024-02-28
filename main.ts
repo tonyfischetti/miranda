@@ -1,138 +1,240 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Editor, MarkdownView, Modal, Notice, Plugin,
+  PluginSettingTab, Setting, FileSystemAdapter,
+  Vault, TFile, normalizePath } from 'obsidian';
 
-// Remember to rename these classes and interfaces!
 
-interface MyPluginSettings {
-	mySetting: string;
-}
+  // Remember to rename these classes and interfaces!
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
-}
 
-export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
 
-	async onload() {
-		await this.loadSettings();
 
-		// This creates an icon in the left ribbon.
-		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
-			// Called when the user clicks the icon.
-			new Notice('This is a notice!');
-		});
-		// Perform additional things with the ribbon
-		ribbonIconEl.addClass('my-plugin-ribbon-class');
+  interface MyPluginSettings {
+    mySetting: string;
+  }
 
-		// This adds a status bar item to the bottom of the app. Does not work on mobile apps.
-		const statusBarItemEl = this.addStatusBarItem();
-		statusBarItemEl.setText('Status Bar Text');
+  const DEFAULT_SETTINGS: MyPluginSettings = {
+    mySetting: 'default'
+  }
+  export default class MyPlugin extends Plugin {
+    settings: MyPluginSettings;
 
-		// This adds a simple command that can be triggered anywhere
-		this.addCommand({
-			id: 'open-sample-modal-simple',
-			name: 'Open sample modal (simple)',
-      // hotkeys: [{ modifiers: ["Mod", "Shift"], key: "a" }],
-      hotkeys: [{ modifiers: ["Mod"], key: "a" }],
-			callback: () => {
-				new SampleModal(this.app).open();
-			}
-		});
+    async onload() {
+      await this.loadSettings();
 
-		// This adds an editor command that can perform some operation on the current editor instance
-		this.addCommand({
-			id: 'sample-editor-command',
-			name: 'Sample editor command',
-			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor.getSelection());
-				editor.replaceSelection('Sample Editor Command');
-			}
-		});
+      const getYYYYMMDD = () => {
+        const rn = new Date();
+        rn.setMinutes(rn.getMinutes() - rn.getTimezoneOffset());
+        return rn.toISOString().split("T")[0];
+      };
 
-		// This adds a complex command that can check whether the current state of the app allows execution of the command
-		this.addCommand({
-			id: 'open-sample-modal-complex',
-			name: 'Open sample modal (complex)',
-			checkCallback: (checking: boolean) => {
-				// Conditions to check
-				const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (markdownView) {
-					// If checking is true, we're simply "checking" if the command can be run.
-					// If checking is false, then we want to actually perform the operation.
-					if (!checking) {
-						new SampleModal(this.app).open();
-					}
+      const addTaskToFile = async (afile: string) => {
+        const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+        let taskLine = await tasksApi.createTaskLineModal();
+        console.log(`task added: ${taskLine}`);
+        if (taskLine && taskLine!=="") {
+          const tfilep = this.app.vault.getAbstractFileByPath(afile);
+          if (!(tfilep instanceof TFile)) {
+            throw new Error('BAD');
+          }
+          await this.app.vault.process(tfilep, (data) => {
+            return (data + "\n" + taskLine);
+          });
+        }
+      };
 
-					// This command will only show up in Command Palette when the check function returns true
-					return true;
-				}
-			}
-		});
+      const editTask2 = async (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
+        console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+        console.log(`editor line count ${editor.lineCount()}`);
+        const originalFile = app.workspace.getActiveFile().path;
+        const originalScrollInfo = editor.getScrollInfo();
+        const originalCursor = editor.getCursor();
+        const originalLine = originalCursor.line;
+        console.log(`original file: ${originalFile}`);
+        console.log(`original scroll info: ${JSON.stringify(originalScrollInfo)}`);
+        console.log(`original line: ${JSON.stringify(originalLine)}`);
+        const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+        const garbage = await tasksApi.editTaskLineModal2("Daily Notes/2024-02-27.md",
+                                                          10,
+                                                          checking,
+                                                          editor,
+                                                          view);
+        await new Promise(resolve => setTimeout(resolve, 127));
+        const neditor = app.workspace.activeEditor.editor;
+        console.log(`editor line count 222: ${neditor.lineCount()}`);
+        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        const tfilep = app.vault.getAbstractFileByPath(originalFile);
+        const leaf = app.workspace.getLeaf(false);
+        leaf.openFile(tfilep);
+        // await new Promise(resolve => setTimeout(resolve, 127));
+        // const nneditor = app.workspace.activeEditor.editor;
+        // nneditor.setCursor(originalLine-1, 0);
+        console.log(`returning garbage`);
+        return garbage;
 
-		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+        // if (taskLine && taskLine!=="") {
+        //   await this.app.vault.process(tfilep, (data) => {
+        //     return (data + "\n" + taskLine);
+        //   });
+        // }
+      };
 
-		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
-		// Using this function will automatically remove the event listener when this plugin is disabled.
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
+      const editTask = async (path: string, lineNumber: number) => {
+        console.log("");
+        console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+        console.log("editTask called");
 
-		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
-	}
+        const originalFile = app.workspace.getActiveFile().path;
+        console.log(`original file: ${originalFile}`);
 
-	onunload() {
+        const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+        const garbage = await tasksApi.editTaskLineModal(path, lineNumber);
+        await new Promise(resolve => setTimeout(resolve, 127));
 
-	}
+        const neditor = app.workspace.activeEditor.editor;
+        const tfilep = app.vault.getAbstractFileByPath(originalFile);
+        const leaf = app.workspace.getLeaf(false);
+        leaf.openFile(tfilep);
 
-	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-	}
+        console.log(`returning garbage`);
+        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        console.log("");
+        return garbage;
+      };
 
-	async saveSettings() {
-		await this.saveData(this.settings);
-	}
-}
+      const getDailyNote = () => {
+        const tIso = getYYYYMMDD();
+        const fnp = `Daily Notes/${tIso}.md`;
+        console.log(`Checking for Daily Note: '${fnp}'`);
+        const tfilep = this.app.vault.getAbstractFileByPath(fnp);
+        if (!tfilep || (!(tfilep instanceof TFile))) {
+          throw new Error('Daily note not created');
+        }
+        return fnp;
+      };
 
-class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
+      this.addCommand({
+        id: 'create-inbox-task',
+        name: 'Create inbox task',
+        hotkeys: [{ modifiers: ["Mod"], key: "i" }],
+        callback: async () => { addTaskToFile("_inbox.md") }
+      });
 
-	onOpen() {
-		const {contentEl} = this;
-		contentEl.setText('Woah!');
-	}
+      this.addCommand({
+        id: 'pee-pee',
+        name: "Pee-pee",
+        callback: () => {
+          editTask("Daily Notes/2024-02-27.md", 9);
+        }
+      });
 
-	onClose() {
-		const {contentEl} = this;
-		contentEl.empty();
-	}
-}
+      this.addCommand({
+        id: 'edit-task',
+        name: "Edit Task",
+        // callback: editTask
+        // editorCheckCallback: editTask
+        editorCheckCallback: editTask2
+      });
 
-class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+      this.addCommand({
+        id: "go-to-mobile",
+        name: "Go to Mobile",
+        callback: async () => {
+          const tfilep = app.vault.getAbstractFileByPath("Mobile.md");
+          const leaf = app.workspace.getLeaf(false);
+          leaf.openFile(tfilep);
+        }
+      });
 
-	constructor(app: App, plugin: MyPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
+      this.addCommand({
+        id: 'create-daily-note-task',
+        name: 'Create task in Daily Note',
+        hotkeys: [{ modifiers: ["Mod"], key: "a" }],
+        callback: () => {
+          const fn = getDailyNote();
+          if (fn) {
+            addTaskToFile(fn);
+          }
+        }
+      });
 
-	display(): void {
-		const {containerEl} = this;
+      // This adds a settings tab so the user can configure various aspects of the plugin
+      this.addSettingTab(new SampleSettingTab(this.app, this));
 
-		containerEl.empty();
+      // If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
+      // Using this function will automatically remove the event listener when this plugin is disabled.
+      this.registerDomEvent(document, 'click', async (evt: MouseEvent) => {
+        // console.log('click', evt);
+        // console.log("click", evt.srcElement);
+        // console.log("click", evt.srcElement.className);
+        // console.log("click", evt.srcElement.attributes['data-path'].nodeValue);
+        // console.log("click", evt.srcElement.attributes['data-line'].nodeValue);
+        if (evt.srcElement.className.match(/tony-task-due/)) {
+          console.log("YAY!");
+          const path = evt.srcElement.attributes['data-path'].nodeValue;
+          const line = Number(evt.srcElement.attributes['data-line'].nodeValue);
+          console.log(`calling editTask with args '${path}' and '${line}'`);
+          editTask(path, line);
+        }
+      });
 
-		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
-				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
-	}
+      // When registering intervals, this function will automatically clear the interval when the plugin is disabled.
+      this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+    }
+
+    onunload() {
+
+    }
+
+    async loadSettings() {
+      this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    }
+
+    async saveSettings() {
+      await this.saveData(this.settings);
+    }
+  }
+
+  class SampleModal extends Modal {
+    constructor(app: App) {
+      super(app);
+    }
+
+    onOpen() {
+      const {contentEl} = this;
+      contentEl.setText('Woah!');
+
+      contentEl.createEl("input", { "text": "date picker", "type": "date" });
+
+    }
+
+    onClose() {
+      const {contentEl} = this;
+      contentEl.empty();
+    }
+  }
+
+  class SampleSettingTab extends PluginSettingTab {
+    plugin: MyPlugin;
+
+    constructor(app: App, plugin: MyPlugin) {
+      super(app, plugin);
+      this.plugin = plugin;
+    }
+
+    display(): void {
+      const {containerEl} = this;
+
+      containerEl.empty();
+
+      new Setting(containerEl)
+      .setName('Setting #1')
+      .setDesc('Its a secret')
+      .addText(text => text
+               .setPlaceholder('Enter your secret')
+               .setValue(this.plugin.settings.mySetting)
+               .onChange(async (value) => {
+                 this.plugin.settings.mySetting = value;
+                 await this.plugin.saveSettings();
+               }));
+    }
 }
