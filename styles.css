@@ -300,44 +300,57 @@ h6 { font-size: 1.2em !important; }
 /**
   * For the Tasks modal
   */
-/* #recurrence, */
-/* #recurrence + code, */
-/* label[for='recurrence'], */
-/* #scheduled, */
-/* #scheduled + code, */
-/* label[for='scheduled'], */
-/* #scheduled, */
-/* #scheduled + code, */
-/* label[for='scheduled'], */
-/* #start, */
-/* #start + code, */
-/* label[for='start'], */
-/* #created, */
-/* #created + code, */
-/* label[for='created'], */
-/* #done, */
-/* #done + code, */
-/* label[for='done'], */
-/* #cancelled, */
-/* #cancelled + code, */
-/* label[for='cancelled'], */
-/* #forwardOnly, */
-/* #forwardOnly + code, */
-/* label[for='forwardOnly'], */
-/* label.tasks-modal-warning, */
-/* /* label[for='status'], */ */
-/* /* input#status, */ */
-/* label[for='blockedBy'], */
-/* label[for='blockedBy'] + span, */
-/* label[for='blockedBy'] + span + div, */
-/* label[for='blocking'], */
-/* label[for='blocking'] + span, */
-/* label[for='blocking'] + span + div, */
-/* .tasks-modal-section.tasks-modal-dates:has(> input#created), */
-/* .tasks-modal-section:has(> select#status-type), */
-/* span:has(> input#priority-medium) { */
-/*     display: none; */
-/* } */
+/*
+#recurrence,
+#recurrence + code,
+label[for='recurrence'],
+#scheduled,
+#scheduled + code,
+label[for='scheduled'],
+#scheduled,
+#scheduled + code,
+label[for='scheduled'],
+#start,
+#start + code,
+label[for='start'],
+#created,
+#created + code,
+label[for='created'],
+#done,
+#done + code,
+label[for='done'],
+#cancelled,
+#cancelled + code,
+label[for='cancelled'],
+#forwardOnly,
+#forwardOnly + code,
+label[for='forwardOnly'],
+label.tasks-modal-warning,
+label[for='status'],
+input#status,
+label[for='blockedBy'],
+label[for='blockedBy'] + span,
+label[for='blockedBy'] + span + div,
+label[for='blocking'],
+label[for='blocking'] + span,
+label[for='blocking'] + span + div,
+.tasks-modal-section.tasks-modal-dates:has(> input#created),
+.tasks-modal-section:has(> select#status-type),
+*/
+
+div.tasks-modal-priorities > label,
+span:has(> input#priority-medium) {
+    display: none;
+}
+
+.tasks-modal-priorities {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.9em;
+    grid-template-columns: 8em 8em 8em 8em;
+    /* grid-template-columns: 4em 4em 4em 4em; */
+}
+
 
 .tasks-modal textarea {
     height: 35px !important;

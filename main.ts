@@ -3,11 +3,6 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin,
   Vault, TFile, normalizePath } from 'obsidian';
 
 
-  // Remember to rename these classes and interfaces!
-
-
-
-
   interface MyPluginSettings {
     mySetting: string;
   }
@@ -40,42 +35,6 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin,
             return (data + "\n" + taskLine);
           });
         }
-      };
-
-      const editTask2 = async (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
-        console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
-        console.log(`editor line count ${editor.lineCount()}`);
-        const originalFile = app.workspace.getActiveFile().path;
-        const originalScrollInfo = editor.getScrollInfo();
-        const originalCursor = editor.getCursor();
-        const originalLine = originalCursor.line;
-        console.log(`original file: ${originalFile}`);
-        console.log(`original scroll info: ${JSON.stringify(originalScrollInfo)}`);
-        console.log(`original line: ${JSON.stringify(originalLine)}`);
-        const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
-        const garbage = await tasksApi.editTaskLineModal2("Daily Notes/2024-02-27.md",
-                                                          10,
-                                                          checking,
-                                                          editor,
-                                                          view);
-        await new Promise(resolve => setTimeout(resolve, 127));
-        const neditor = app.workspace.activeEditor.editor;
-        console.log(`editor line count 222: ${neditor.lineCount()}`);
-        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        const tfilep = app.vault.getAbstractFileByPath(originalFile);
-        const leaf = app.workspace.getLeaf(false);
-        leaf.openFile(tfilep);
-        // await new Promise(resolve => setTimeout(resolve, 127));
-        // const nneditor = app.workspace.activeEditor.editor;
-        // nneditor.setCursor(originalLine-1, 0);
-        console.log(`returning garbage`);
-        return garbage;
-
-        // if (taskLine && taskLine!=="") {
-        //   await this.app.vault.process(tfilep, (data) => {
-        //     return (data + "\n" + taskLine);
-        //   });
-        // }
       };
 
       const editTask = async (path: string, lineNumber: number) => {
@@ -112,6 +71,12 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin,
         return fnp;
       };
 
+      const goToNote = (path) => {
+        const tfilep = app.vault.getAbstractFileByPath(path);
+        const leaf = app.workspace.getLeaf(false);
+        leaf.openFile(tfilep);
+      };
+
       this.addCommand({
         id: 'create-inbox-task',
         name: 'Create inbox task',
@@ -120,19 +85,15 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin,
       });
 
       this.addCommand({
-        id: 'pee-pee',
-        name: "Pee-pee",
+        id: 'create-daily-note-task',
+        name: 'Create task in Daily Note',
+        // hotkeys: [{ modifiers: ["Mod"], key: "a" }],
         callback: () => {
-          editTask("Daily Notes/2024-02-27.md", 9);
+          const fn = getDailyNote();
+          if (fn) {
+            addTaskToFile(fn);
+          }
         }
-      });
-
-      this.addCommand({
-        id: 'edit-task',
-        name: "Edit Task",
-        // callback: editTask
-        // editorCheckCallback: editTask
-        editorCheckCallback: editTask2
       });
 
       this.addCommand({
@@ -146,16 +107,34 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin,
       });
 
       this.addCommand({
-        id: 'create-daily-note-task',
-        name: 'Create task in Daily Note',
-        hotkeys: [{ modifiers: ["Mod"], key: "a" }],
+        id: "go-to-mobile",
+        name: "Go to Mobile",
         callback: () => {
-          const fn = getDailyNote();
-          if (fn) {
-            addTaskToFile(fn);
-          }
+          goToNote("Mobile.md");
         }
       });
+      this.addCommand({
+        id: "go-to-dashboard",
+        name: "Go to dashboard",
+        callback: () => {
+          goToNote("Dashboard.md");
+        }
+      });
+      this.addCommand({
+        id: "go-to-control",
+        name: "Go to control",
+        callback: () => {
+          goToNote("Control.md");
+        }
+      });
+      this.addCommand({
+        id: "go-to-inbox",
+        name: "Go to inbox",
+        callback: () => {
+          goToNote("_inbox.md");
+        }
+      });
+
 
       // This adds a settings tab so the user can configure various aspects of the plugin
       this.addSettingTab(new SampleSettingTab(this.app, this));
