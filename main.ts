@@ -99,37 +99,34 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin,
       this.addCommand({
         id: "go-to-mobile",
         name: "Go to Mobile",
-        callback: async () => {
-          const tfilep = app.vault.getAbstractFileByPath("Mobile.md");
-          const leaf = app.workspace.getLeaf(false);
-          leaf.openFile(tfilep);
-        }
-      });
-
-      this.addCommand({
-        id: "go-to-mobile",
-        name: "Go to Mobile",
         callback: () => {
           goToNote("Mobile.md");
         }
       });
       this.addCommand({
         id: "go-to-dashboard",
-        name: "Go to dashboard",
+        name: "Go to Dashboard",
         callback: () => {
           goToNote("Dashboard.md");
         }
       });
       this.addCommand({
         id: "go-to-control",
-        name: "Go to control",
+        name: "Go to Control",
         callback: () => {
           goToNote("Control.md");
         }
       });
       this.addCommand({
+        id: "go-to-atlas",
+        name: "Go to Atlas",
+        callback: () => {
+          goToNote("Atlas.md");
+        }
+      });
+      this.addCommand({
         id: "go-to-inbox",
-        name: "Go to inbox",
+        name: "Go to _inbox",
         callback: () => {
           goToNote("_inbox.md");
         }

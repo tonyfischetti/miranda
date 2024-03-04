@@ -134,7 +134,7 @@ h6 { font-size: 1.2em !important; }
     flex-direction: column;
     flex-grow: 1;
     padding-top: 17px;
-    padding-bottom: 17px;
+    padding-bottom: 10px;
 }
 
 .tony-task-top-half {
@@ -145,7 +145,7 @@ h6 { font-size: 1.2em !important; }
     display: flex;
     justify-items: end;
     width: 97%;
-    padding-top: 17px;
+    padding-top: 13px;
     align-items: center;
 }
 
