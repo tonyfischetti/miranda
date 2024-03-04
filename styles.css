@@ -102,29 +102,65 @@ h6 { font-size: 1.2em !important; }
 
 /* Style the Todo list entries *******************************************/
 
+.tony-task-due-date-divider {
+    height: 27px;
+}
+
 .tony-task-div {
-    border-radius: 15px;
-    padding: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
+    display: flex;
+    border-radius: 21px;
+    cursor: default;
+    /* background-color: #EFEFEF; */
     background-color: rgba(255, 255, 255, .7);
 }
 
-.tony-task-div:hover {
-    background-color: rgba(255, 0, 0, 0.1);
+.tony-task-left {
+    width: 17px;
 }
 
-.tony-task-tag-date {
+.tony-task-right {
+    width: 53px;
+    max-width: 53px;
+    min-width: 53px;
+    border-radius: 0px 19px 19px 0px;
+}
+
+.tony-task-right:hover {
+    cursor: pointer;
+}
+
+.tony-task-middle {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding-top: 17px;
+    padding-bottom: 17px;
+}
+
+.tony-task-top-half {
+
+}
+
+.tony-task-bottom-half {
     display: flex;
     justify-items: end;
-    /* justify-content: space-between; */
-    width: 95%;
-    padding-top: 10px;
+    width: 97%;
+    padding-top: 17px;
     align-items: center;
 }
 
-.tony-task-first-line {
+.tony-task-due-holder {
     display: flex;
+    flex-grow: 1;
+}
+
+
+.tony-task-title {
+    display: flex;
+}
+
+.tony-task-link {
+    margin-right: 17px;
 }
 
 .tony-dashboard ul.dataview.list-view-ul {
@@ -136,11 +172,11 @@ h6 { font-size: 1.2em !important; }
     text-decoration: none !important;
     color: black !important;
     font-weight: 600;
+    margin-right: 27px;
 }
 
 .tony-dashboard li {
     list-style-type: none;
-    padding-bottom: 1.5em;
 }
 
 .tony-dashboard .inline-field {
@@ -179,7 +215,7 @@ h6 { font-size: 1.2em !important; }
     column-gap: 10px;
 }
 
-.tony-dashboard span.tony-task-tag {
+.tony-dashboard .tony-task-tag {
     background-color: #DCDCDC;
     font-size: .9em;
     font-weight: 600;
@@ -187,69 +223,31 @@ h6 { font-size: 1.2em !important; }
     padding: 2px 8px;
 }
 
-.tony-dashboard span.nypl-tag {
+.tony-dashboard .nypl-tag {
     background-color: rgba(255, 0, 0, .5);
 }
 
-.tony-dashboard span.volunteer-tag {
+.tony-dashboard .volunteer-tag {
     background-color: #FFE4B5;
 }
 
-.tony-dashboard span.life-tag {
+.tony-dashboard .life-tag {
     background-color: rgba(64, 130, 109, .5);
 }
 
-.tony-dashboard span.AA-tag {
+.tony-dashboard .AA-tag {
     background-color: #DDA0DD;
 }
 
-.tony-dashboard span.doh-tag {
+.tony-dashboard .doh-tag {
     background-color: #B0E0E6;
 }
 
-/*************************************************************************/
-
-
-
-/* Fixes for smaller screens *********************************************/
-
-@media screen and (max-width: 900px) {
-    .tony-dashboard div.callout[data-callout="col"] {
-        width: 100%;
-    }
-
-    .tony-dashboard .callout[data-callout="row"] .callout-content {
-        display: flex;
-        flex-flow: column;
-    }
-}
-
-
-@media screen and (max-width: 500px) {
-    .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section,
-    .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section > div,
-    .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section,
-    .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section > div {   
-       width: 95% !important;
-       max-width: 95% !important;
-     }
-
-    .tony-dashboard .cm-sizer {
-        --line-width: 95% !important;
-    }
-
-    .tony-small-dashboard .tony-task-div {
-        margin-left:  10px;
-        margin-right: 10px;
-        font-size: .8em;
-    }
-
-    .tony-small-dashboard .tony-task-tags-holder {
-        font-size: 0.8em;
-    }
-}
 
 /*************************************************************************/
+
+
+
 
 
 /*========================================================================*/
@@ -263,22 +261,26 @@ h6 { font-size: 1.2em !important; }
 }
 
 .view-content .tony-small-dashboard {
-    /* pinker */
-    /* background-color: rgba(221, 160, 221, 0.26) !important; */
-    /* viridianer */
-    background-color: rgba(64, 130, 109, .17) !important;
     background-color: #f7f2eb !important;
+}
 
+.dont-show-tags .metadata-container {
+    display: none !important;
+}
+
+.dont-show-title .inline-title {
+    display: none !important;
 }
 
 .tony-small-dashboard li {
     padding-bottom: 1em !important;
-    max-width: 1024px;
+    max-width: 500px;
     margin: auto;
+    padding-left: 10px;
 }
 
 .tony-small-dashboard div.mb-button {
-    max-width: 1024px;
+    max-width: 727px;
     margin: auto;
 }
 
@@ -300,39 +302,17 @@ h6 { font-size: 1.2em !important; }
 /**
   * For the Tasks modal
   */
+
 /*
-#recurrence,
-#recurrence + code,
-label[for='recurrence'],
-#scheduled,
-#scheduled + code,
-label[for='scheduled'],
-#scheduled,
-#scheduled + code,
-label[for='scheduled'],
-#start,
-#start + code,
-label[for='start'],
-#created,
-#created + code,
-label[for='created'],
-#done,
-#done + code,
-label[for='done'],
-#cancelled,
-#cancelled + code,
-label[for='cancelled'],
-#forwardOnly,
-#forwardOnly + code,
-label[for='forwardOnly'],
-label.tasks-modal-warning,
-label[for='status'],
-input#status,
-label[for='blockedBy'],
-label[for='blockedBy'] + span,
-label[for='blockedBy'] + span + div,
-label[for='blocking'],
-label[for='blocking'] + span,
+#recurrence, #recurrence + code, label[for='recurrence'], #scheduled,
+#scheduled + code, label[for='scheduled'], #scheduled, #scheduled + code,
+label[for='scheduled'], #start, #start + code, label[for='start'], #created,
+#created + code, label[for='created'], #done, #done + code, label[for='done'],
+#cancelled, #cancelled + code, label[for='cancelled'], #forwardOnly,
+#forwardOnly + code, label[for='forwardOnly'], label.tasks-modal-warning,
+label[for='status'], input#status, label[for='blockedBy'],
+label[for='blockedBy'] + span, label[for='blockedBy'] + span + div,
+label[for='blocking'], label[for='blocking'] + span,
 label[for='blocking'] + span + div,
 .tasks-modal-section.tasks-modal-dates:has(> input#created),
 .tasks-modal-section:has(> select#status-type),
@@ -360,10 +340,79 @@ span:has(> input#priority-medium) {
     padding-top: 0px !important;
 }
 
+/*************************************************************************/
 
-/* .tasks-modal-section.tasks-modal-dates, */
-/* .tasks-modal-section.tasks-modal-status, */
-/* .tasks-modal-dates + .tasks-modal-section */
+
+/*========================================================================*/
+
+
+/* Fixes for smaller screens *********************************************/
+
+@media screen and (max-width: 900px) {
+    .tony-dashboard div.callout[data-callout="col"] {
+        width: 100%;
+    }
+
+    .tony-dashboard .callout[data-callout="row"] .callout-content {
+        display: flex;
+        flex-flow: column;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section,
+    .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section > div,
+    .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section,
+    .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section > div {   
+       /* width: 55% !important; */
+       /* max-width: 55% !important; */
+       width: 95% !important;
+       max-width: 95% !important;
+     }
+
+    .tony-dashboard .cm-sizer {
+        --line-width: 95% !important;
+        /* --line-width: 55% !important; */
+    }
+
+    .tony-small-dashboard .tony-task-div {
+        /* margin-left:  10px; */
+        /* margin-right: 10px; */
+        font-size: 0.8em;
+    }
+
+    .tony-small-dashboard .tony-task-tags-holder {
+        font-size: 0.8em;
+    }
+
+    .cm-scroller {
+        padding: 17px !important;
+    }
+
+    .tony-small-dashboard .cm-scroller {
+        padding: 10px !important;
+    }
+
+    .tony-small-dashboard li {
+        max-width: 100%;
+    }
+}
 
 /*************************************************************************/
 
+
+/*========================================================================*/
+
+/* Neon theme fixes */
+
+.tony-dashboard span {
+    color: #323232;
+
+/* .tony-dashboard div.cm-scroller { */
+.cm-scroller {
+    padding: 0px !important;
+}
+
+
+/*========================================================================*/

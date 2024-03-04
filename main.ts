@@ -144,10 +144,7 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin,
       this.registerDomEvent(document, 'click', async (evt: MouseEvent) => {
         // console.log('click', evt);
         // console.log("click", evt.srcElement);
-        // console.log("click", evt.srcElement.className);
-        // console.log("click", evt.srcElement.attributes['data-path'].nodeValue);
-        // console.log("click", evt.srcElement.attributes['data-line'].nodeValue);
-        if (evt.srcElement.className.match(/tony-task-due/)) {
+        if (evt.srcElement.className.match(/tony-task-right/)) {
           console.log("YAY!");
           const path = evt.srcElement.attributes['data-path'].nodeValue;
           const line = Number(evt.srcElement.attributes['data-line'].nodeValue);
