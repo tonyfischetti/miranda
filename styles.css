@@ -110,8 +110,8 @@ h6 { font-size: 1.2em !important; }
     display: flex;
     border-radius: 21px;
     cursor: default;
-    /* background-color: #EFEFEF; */
-    background-color: rgba(255, 255, 255, .7);
+    /* background-color: rgba(255, 255, 255, .7); */
+    background-color: #FDFBF9;
 }
 
 .tony-task-left {
@@ -154,7 +154,6 @@ h6 { font-size: 1.2em !important; }
     flex-grow: 1;
 }
 
-
 .tony-task-title {
     display: flex;
 }
@@ -194,7 +193,14 @@ h6 { font-size: 1.2em !important; }
     text-align: right;
 }
 
-.tony-dashboard .tony-task-overdue {
+.tony-dashboard span.tony-task-tag,
+.tony-dashboard span.tony-task-due,
+.tony-dashboard div.tony-task-sub-p, 
+.tony-dashboard div.task-parent-text {
+    color: #323232;
+}
+
+.tony-dashboard span.tony-task-overdue {
     color: rgba(190, 0, 0, 1);
 }
 
@@ -212,7 +218,9 @@ h6 { font-size: 1.2em !important; }
 
 .tony-dashboard .tony-task-tags-holder {
     display: flex;
+    flex-wrap: wrap;
     column-gap: 10px;
+    row-gap: 10px;
 }
 
 .tony-dashboard .tony-task-tag {
@@ -243,6 +251,14 @@ h6 { font-size: 1.2em !important; }
     background-color: #B0E0E6;
 }
 
+.tony-dashboard .music-tag {
+    /* background-color: #4d60ff; */
+    background-color: #9AA4FF;
+}
+
+.tony-dashboard .notag-tag {
+    background-color: #000000;
+}
 
 /*************************************************************************/
 
@@ -256,13 +272,13 @@ h6 { font-size: 1.2em !important; }
 
 /*************************************************************************/
 
-.view-content .tony-dashboard {
-    background-color: #fffaf3 !important;
-}
+/* .view-content .tony-dashboard { */
+/*     background-color: #FFFAF3 !important; */
+/* } */
 
-.view-content .tony-small-dashboard {
-    background-color: #f7f2eb !important;
-}
+/* .view-content .tony-small-dashboard { */
+/*     background-color: #F7F2EB !important; */
+/* } */
 
 .dont-show-tags .metadata-container {
     display: none !important;
@@ -284,7 +300,6 @@ h6 { font-size: 1.2em !important; }
     margin: auto;
 }
 
-
 .tony-small-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section,
 .tony-small-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section > div,
 .tony-small-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section,
@@ -292,8 +307,6 @@ h6 { font-size: 1.2em !important; }
    width: 100% !important;
    max-width: 100% !important;
 }
-
-
 
 /*************************************************************************/
 
@@ -406,13 +419,9 @@ span:has(> input#priority-medium) {
 
 /* Neon theme fixes */
 
-.tony-dashboard span {
-    color: #323232;
-
 /* .tony-dashboard div.cm-scroller { */
 .cm-scroller {
     padding: 0px !important;
 }
-
 
 /*========================================================================*/
