@@ -1,12 +1,12 @@
 
 /*************************************************************************/
 
-h1 { font-size: 3em !important; }
-h2 { font-size: 2em !important; }
-h3 { font-size: 1.8em !important; }
-h4 { font-size: 1.6em !important; }
-h5 { font-size: 1.4em !important; }
-h6 { font-size: 1.2em !important; }
+h1 { font-size: 4em !important; }
+h2 { font-size: 3em !important; }
+h3 { font-size: 2.5em !important; }
+h4 { font-size: 2em !important; }
+h5 { font-size: 1.6em !important; }
+h6 { font-size: 1.4em !important; }
 
 /**************************************************************************/
 
@@ -37,7 +37,7 @@ h6 { font-size: 1.2em !important; }
 .tony-dashboard .callout[data-callout="col"] .callout-title {
     display: flex;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 /*************************************************************************/
@@ -256,6 +256,10 @@ h6 { font-size: 1.2em !important; }
     background-color: #9AA4FF;
 }
 
+.tony-dashboard .learning-tag {
+    background-color: #40826d;
+}
+
 .tony-dashboard .notag-tag {
     background-color: #000000;
 }
@@ -425,3 +429,67 @@ span:has(> input#priority-medium) {
 }
 
 /*========================================================================*/
+
+/* span.task-due { */
+/*     width: fit-content; */
+/*     margin-left: 5px; */
+/*     order: 5; */
+/*     font-weight: var(--bold-weight); */
+/* } */
+
+li.task-list-item.plugin-tasks-list-item {
+  padding: 15px 0px;
+}
+
+li span.task-due {
+  display: block;
+}
+
+/* li span.task-description:first-child { */
+/*   font-size: 1.2em; */
+/*   width: 100%; */
+/* } */
+
+li span.task-description {
+  font-size: 1.2em;
+}
+
+li span a.tag {
+  font-size: 0.8em;
+  color: black;
+  background-color: #efefef;
+  width: 100%;
+  text-align: right;
+}
+
+
+li span a.tag[data-tag-name="#nypl"] {
+    background-color: rgba(255, 0, 0, .5);
+    color: white;
+}
+
+li span a.tag[data-tag-name="#volunteer"] {
+    background-color: #FFE4B5;
+}
+
+li span a.tag[data-tag-name="#life"] {
+    background-color: rgba(64, 130, 109, .5);
+    color: white;
+}
+
+li span a.tag[data-tag-name="#AA"] {
+    background-color: #DDA0DD;
+}
+
+li span a.tag[data-tag-name="#doh"] {
+    background-color: #B0E0E6;
+}
+
+li span a.tag[data-tag-name="#music"] {
+    /* background-color: #4d60ff; */
+    background-color: #9AA4FF;
+}
+
+li span a.tag[data-tag-name="#learning"] {
+    background-color: #40826d;
+}

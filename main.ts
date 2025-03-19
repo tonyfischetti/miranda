@@ -45,19 +45,23 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin,
         const originalFile = app.workspace.getActiveFile().path;
         console.log(`original file: ${originalFile}`);
 
-        const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
-        const garbage = await tasksApi.editTaskLineModal(path, lineNumber);
-        await new Promise(resolve => setTimeout(resolve, 127));
-
         const neditor = app.workspace.activeEditor.editor;
         const tfilep = app.vault.getAbstractFileByPath(originalFile);
+        console.log({ tfilep });
         const leaf = app.workspace.getLeaf(false);
+        console.log({ leaf });
         leaf.openFile(tfilep);
 
-        console.log(`returning garbage`);
-        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        console.log("");
-        return garbage;
+        // const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+        // // const garbage = await tasksApi.editTaskLineModal(path, lineNumber);
+        // const garbage = await tasksApi.createTaskLineModal(path, lineNumber);
+        // await new Promise(resolve => setTimeout(resolve, 127));
+        //
+        //
+        // console.log(`returning garbage`);
+        // console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        // console.log("");
+        // return garbage;
       };
 
       const getDailyNote = () => {
@@ -97,10 +101,10 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin,
       });
 
       this.addCommand({
-        id: "go-to-mobile",
-        name: "Go to Mobile",
+        id: "go-to-todos",
+        name: "Go to TODOs",
         callback: () => {
-          goToNote("Mobile.md");
+          goToNote("TODOs.md");
         }
       });
       this.addCommand({
