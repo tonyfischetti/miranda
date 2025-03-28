@@ -495,3 +495,29 @@ li span a.tag[data-tag-name="#music"] {
 li span a.tag[data-tag-name="#learning"] {
     background-color: #40826d;
 }
+
+
+label[for='start'], label[for="start"] + *, label[for="start"] + * + * {
+  display: none;
+}
+
+label[for='recurrence'], label[for="recurrence"] + *, label[for="recurrence"] + * + * {
+  display: none;
+}
+
+label[for='scheduled'], label[for="scheduled"] + *, label[for="scheduled"] + * + * {
+  display: none;
+}
+
+div.future-dates-only {
+  display: none !important;
+}
+
+section.tasks-modal-dependencies-section,
+section.tasks-modal-dependencies-section +  *,
+section.tasks-modal-dependencies-section +  * + * {
+  display: none;
+}
+section.tasks-modal-priority-section {
+  display: none;
+}
