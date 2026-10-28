@@ -16,7 +16,7 @@ h6 { font-size: 1.4em !important; }
 .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section,
 .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section > div,
 .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section,
-.tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section > div {   
+.tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section > div {
    width: 87% !important;
    max-width: 87% !important;
  }
@@ -195,7 +195,7 @@ h6 { font-size: 1.4em !important; }
 
 .tony-dashboard span.tony-task-tag,
 .tony-dashboard span.tony-task-due,
-.tony-dashboard div.tony-task-sub-p, 
+.tony-dashboard div.tony-task-sub-p,
 .tony-dashboard div.task-parent-text {
     color: #323232;
 }
@@ -307,7 +307,7 @@ h6 { font-size: 1.4em !important; }
 .tony-small-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section,
 .tony-small-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section > div,
 .tony-small-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section,
-.tony-small-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section > div {   
+.tony-small-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section > div {
    width: 100% !important;
    max-width: 100% !important;
 }
@@ -381,7 +381,7 @@ span:has(> input#priority-medium) {
     .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section,
     .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-preview-section > div,
     .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section,
-    .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section > div {   
+    .tony-dashboard.markdown-preview-view.is-readable-line-width .markdown-reading-section > div {
        /* width: 55% !important; */
        /* max-width: 55% !important; */
        width: 95% !important;
@@ -457,13 +457,13 @@ li span.task-description {
 }
 
 li span a.tag {
-  font-size: 0.8em;
+  font-size: 0.7em !important;
   color: black;
   background-color: #efefef;
-  width: 100%;
-  text-align: right;
+  text-transform: none !important;
+  letter-spacing: 0.01em !important;
+  font-weight: normal !important;
 }
-
 
 li span a.tag[data-tag-name="#nypl"] {
     background-color: rgba(255, 0, 0, .5);
@@ -521,3 +521,78 @@ section.tasks-modal-dependencies-section +  * + * {
 section.tasks-modal-priority-section {
   display: none;
 }
+
+
+/*========================================================================*/
+
+/* Miranda's add-task modal **********************************************/
+
+.miranda-add-task .modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.miranda-add-task .miranda-text {
+  width: 100%;
+  font-size: 1.15em;
+  padding: 10px 12px;
+}
+
+.miranda-add-task .miranda-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.miranda-add-task .miranda-label {
+  width: 100%;
+  font-size: 0.8em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.miranda-add-task .miranda-chip {
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 0.95em;
+  background: var(--background-modifier-border);
+  color: var(--text-normal);
+  border: 1px solid transparent;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.miranda-add-task .miranda-chip.is-selected {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.miranda-add-task .miranda-other {
+  flex: 1 1 6em;
+  min-width: 6em;
+}
+
+.miranda-add-task .miranda-date {
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+.miranda-add-task .miranda-date.is-selected {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.miranda-add-task .miranda-add {
+  width: 100%;
+  font-size: 1.1em;
+  padding: 12px;
+}
+
+.is-mobile .miranda-add-task .miranda-chip {
+  padding: 9px 16px;             /* roomier tap targets */
+}
+
+/*************************************************************************/
